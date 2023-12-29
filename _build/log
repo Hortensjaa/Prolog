@@ -1,0 +1,6 @@
+# dune init proj prolog
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /home/lilka/.cache/dune/db
+# Workspace root: /home/lilka/Pulpit/funkcyjne/prolog
+# Auto-detected concurrency: 4
