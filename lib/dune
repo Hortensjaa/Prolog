@@ -1,2 +1,3 @@
 (library
- (name prolog))
+ (name lib)
+ (libraries str))

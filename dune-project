@@ -5,9 +5,9 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github Hortensjaa/Prolog))
 
-(authors "Author Name")
+(authors "Julia Kulczycka")
 
 (maintainers "Maintainer Name")
 

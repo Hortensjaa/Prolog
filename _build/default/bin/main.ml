@@ -1,7 +1,7 @@
 open Lib
 
 let () = 
-  let string1 = "father(john, mary)." in
+  let string1 = "'father(john, mary).'m" in
   let string2 = "lik_es(apple, [kot, dog])." in
   let string3 = "father(john)." in
   let string4 = "invalidfact(just, checking, syntax)." in
