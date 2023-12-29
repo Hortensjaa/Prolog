@@ -1,4 +1,4 @@
 (lang dune 3.12)
 (name prolog)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (prolog)))
+(sections (lib .) (bin ../../bin) (doc ../../doc/prolog))
+(files (lib (META dune-package opam)) (bin (prolog)) (doc (README.md)))

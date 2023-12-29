@@ -1,4 +1,4 @@
-# dune exec prolog
+# dune runtest
 # OCAMLPARAM: unset
 # Shared cache: disabled
 # Shared cache location: /home/lilka/.cache/dune/db
@@ -19,6 +19,19 @@
 #        }
 #  ; instrument_with = []
 #  }
-$ /home/lilka/.opam/projekt/bin/ocamlc.opt -config > /tmp/dune_dfe7f1_output
-$ (cd _build/default && /home/lilka/.opam/projekt/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -32 -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I /home/lilka/.opam/projekt/lib/ocaml/str -I lib/.lib.objs/byte -I lib/.lib.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
-$ (cd _build/default && /home/lilka/.opam/projekt/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -warn-error -32 -g -o bin/main.exe /home/lilka/.opam/projekt/lib/ocaml/str/str.cmxa lib/lib.cmxa bin/.main.eobjs/native/dune__exe__Main.cmx)
+$ /home/lilka/.opam/projekt/bin/ocamlc.opt -config > /tmp/dune_03de06_output
+$ (cd _build/default/test && ./test_regex.exe)
+> Testing `Regex tests'.
+> This run has ID `ZV18UR1B'.
+>
+>   [OK]          is_atom             0   Test is_atom.
+>   [OK]          is_var              0   Test is_var.
+>   [OK]          is_number           0   Test is_number.
+>   [OK]          is_comp             0   Test is_comp.
+>   [OK]          not_atom            0   Test not_atom.
+>   [OK]          not_var             0   Test not_var.
+>   [OK]          not_number          0   Test not_number.
+>   [OK]          not_comp            0   Test not_comp.
+>
+> Full test results in `~/Pulpit/funkcyjne/prolog/_build/default/test/_build/_tests/Regex tests'.
+> Test Successful in 0.001s. 8 tests run.

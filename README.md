@@ -6,6 +6,7 @@ An implementation of Prolog language written in OCaml 5.0.0
 Install dependencies with [OPAM](https://opam.ocaml.org/):
 ```
 $ opam install dune
+$ opam install alcotest
 ```
 
 ## Installation
