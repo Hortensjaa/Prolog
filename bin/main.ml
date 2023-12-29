@@ -1,4 +1,4 @@
 (* open Lib *)
 
-let () = print_endline "Hiiii"
+let () = print_endline "Hii"
 
