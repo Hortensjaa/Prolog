@@ -1,53 +1,54 @@
-open Lib
+open Alcotest
+open Parsing.Regex.Re
 
 let test_is_atom () =
-  let test_strings = ["test"; "'test'"; "'Some test'"] in
+  let test_strings = ["test"; "'test'"; "'Some test'"; "is_atom"] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_atom" true (Parser.is_atom exp)
+    (check bool) "is_atom" true (is_atom exp)
   ) test_strings
 
 let test_is_var () =
-  let test_strings = ["Test"; "Variable"; "_test"; "_"] in
+  let test_strings = ["Test"; "Var_iable"; "_test"; "_"] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_var" true (Parser.is_var exp)
+    (check bool) "is_var" true (is_var exp)
   ) test_strings
 
 let test_is_number () =
   let test_strings = ["123"; "-305"; "0"; "13789"] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_number" true (Parser.is_number exp)
+    (check bool) "is_number" true (is_number exp)
   ) test_strings
 
 let test_is_comp () =
   let test_strings = 
-    ["[1, 2, 3]"; "\"some string\""; "father(John, mary)."; "has_pets(ania, [cat, dog])."; "human(you)."] in
+    ["father(John, mary)."; "has_pets(ania, [cat, dog])."; "human(you)."; "employee(Name, Surname, Salary)."] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_comp" true (Parser.is_comp exp)
+    (check bool) "is_compound" true (is_compound exp)
   ) test_strings
 
 let test_not_atom () =
   let test_strings = ["not atom for sure"; "_illegalunderscore"; "Uppercase"; "1t1sn0tat0m"] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_atom" false (Parser.is_atom exp)
+    (check bool) "is_atom" false (is_atom exp)
   ) test_strings
 
 let test_not_var () =
-  let test_strings = ["'quotes'"; "lowercase"; "1idk"; "Illegal space"] in
+  let test_strings = ["'quotes'"; "lowercase"; "1dk"; "Illegal space"] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_var" false (Parser.is_var exp)
+    (check bool) "is_var" false (is_var exp)
   ) test_strings
 
 let test_not_number () =
   let test_strings = ["a123"; "45oj6"; "0-"; "abcd"] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_number" false (Parser.is_number exp)
+    (check bool) "is_number" false (is_number exp)
   ) test_strings
 
 let test_not_comp () =
   let test_strings = 
-    ["[1, 2, 3], 4"; "'it is not string'"; "father(John, mary)"; "has_pets(ania, cat, dog)."; "Human(you)."] in
+    ["father(John, mary)"; "(has_pets)(ania, cat, dog)."; "Human(you)."] in
   List.iter (fun exp ->
-    Alcotest.(check bool) "is_comp" false (Parser.is_comp exp)
+    (check bool) "is_compound" false (is_compound exp)
   ) test_strings
 
 let () =
