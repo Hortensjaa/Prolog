@@ -16,6 +16,9 @@ To build this project, clone the repository and build it with dune:
 $ git clone https://github.com/Hortensjaa/Prolog/
 $ cd Prolog
 $ dune build
+```
+to run, all you need is
+```
 $ dune exec prolog
 ```
 
