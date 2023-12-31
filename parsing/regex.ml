@@ -40,21 +40,22 @@ module Clauses = struct
     let re = regexp {|\\\+ \(.+\)\.|} in
     string_match re exp 0 && Terms.is_compound (matched_group 1 exp)
 
+  let fact_or_neg exp = is_fact (exp^".") || is_neg (exp^".")
+
   let is_rule exp =
-    let re = regexp {|\(\\\+ \)?\(.+\) :-\( \\\+\)? \(.+\)\.|} in
+    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :-\( \\\+\)? \(.+\)\.|} in
     let b = Str.string_match re exp 0 in
     try
-      let head = (Str.matched_group 2 exp) in 
-      let body = (Str.matched_group 4 exp) in 
-      b 
-      && Terms.is_compound body && Terms.is_compound head
+      let head = (Str.matched_group 1 exp) in 
+      let body = (Str.matched_group 5 exp) in 
+      b  && fact_or_neg head && fact_or_neg body
     with |_ -> false
 
   let is_conj exp =
-    let re = regexp {|\(\\\+ \)?\(.+\) :- \(.+\)\(,\( \\\+\)? \(.+\)\)+\.|} in
-    string_match re exp 0 && Terms.is_compound (matched_group 2 exp)
+    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(.+\)\(,\( \\\+\)? \(.+\)\)+\.|} in
+    string_match re exp 0 && fact_or_neg (matched_group 1 exp)
 
   let is_disj exp =
-    let re = regexp {|\(\\\+ \)?\(.+\) :- \(.+\)\(;\( \\\+\)? \(.+\)\)+\.|} in
-    string_match re exp 0 && Terms.is_compound (matched_group 2 exp)
+    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(.+\)\(;\( \\\+\)? \(.+\)\)+\.|}in
+    string_match re exp 0 && fact_or_neg (matched_group 1 exp)
 end

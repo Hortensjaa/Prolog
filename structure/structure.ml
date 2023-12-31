@@ -6,7 +6,7 @@ type term =
 
 type clause = 
 | Fact of term
-| Negation of term
+| Neg of term
 | Rule of clause * clause         (* implication *)
 | CRule of clause * clause list   (* implication with conjunction *)
 | DRule of clause * clause list   (* implication with disjunction *)
