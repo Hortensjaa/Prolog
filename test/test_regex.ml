@@ -21,7 +21,9 @@ let test_is_number () =
 
 let test_is_comp () =
   let test_strings = 
-    ["father(John, mary)."; "has_pets(ania, [cat, dog])."; "human(you)."; "employee(Name, Surname, Salary)."] in
+    ["series('Bojack Horseman', 2014)."; "human(you)."; "employee(Name, Surname, Salary).";
+    "'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')."
+    ] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_compound exp)
   ) test_strings
