@@ -12,10 +12,17 @@ $ opam install alcotest
 ## Installation
 
 To build this project, clone the repository and build it with dune:
-
 ```
 $ git clone https://github.com/Hortensjaa/Prolog/
 $ cd Prolog
 $ dune build
 $ dune exec prolog
+```
+
+## Testing
+
+Tests for this project were written with [Alcotest](https://github.com/mirage/alcotest).
+All needed to run them is:
+```
+$ dune runtest
 ```

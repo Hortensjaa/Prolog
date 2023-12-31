@@ -1,1 +1,7 @@
-(env (dev (flags (:standard -warn-error -32) (:standard -warn-error -33))))
+(env (dev (flags 
+ (:standard -warn-error -26) 
+ (:standard -warn-error -27) 
+ (:standard -warn-error -32) 
+ (:standard -warn-error -33)
+ (:standard -warn-error -39)
+)))
