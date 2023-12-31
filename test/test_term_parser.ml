@@ -61,7 +61,7 @@ let test_invalid_input2 () =
 
 let () =
   let open Alcotest in
-  run "parser_tests" [
+  run "Terms' parser tests" [
     "parse_atom", [
       test_case "parse atom" `Quick test_parse_atom;
     ];

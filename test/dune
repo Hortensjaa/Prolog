@@ -2,5 +2,6 @@
  ; (names test_term_parser)
  ; (names test_clause_re)
  ; (names test_term_re)
- (names test_term_re test_clause_re test_term_parser)
+ (names test_clause_parser)
+ ; (names test_term_re test_clause_re test_term_parser test_clause_parser)
  (libraries alcotest parsing))

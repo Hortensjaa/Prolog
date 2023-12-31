@@ -28,17 +28,23 @@ let rec parse_term exp =
     | _ -> failwith ("parse: not a compound - [" ^ String.concat "; " args_list ^ "]")
   else failwith ("parse: not a term - " ^ exp)
 
-(* 
-let parse_clause exp =
+
+let rec parse_clause exp =
   let open Regex.Clauses in
 
   if (is_fact exp) then
     let head = matched_group 1 exp in 
+    print_endline ("fact: " ^ head);
     Fact(parse_term head)
+
   else if (is_neg exp) then 
-    let head = matched_group 1 exp in 
+    let head = matched_group 1 exp in
+    print_endline ("neg: " ^ head); 
     Neg(parse_term head)
+
   else if (is_rule exp) then
-    let head = Str.matched_group 2 exp
-    let body 
-  else failwith ("parse: not a clause - " ^ exp) *)
+    let head = Str.matched_group 1 exp in
+    let body = Str.matched_group 5 exp in 
+    Rule((parse_clause (head^".")), (parse_clause (body^".")))
+
+  else failwith ("parse: not a clause - " ^ exp)

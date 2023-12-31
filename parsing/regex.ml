@@ -34,11 +34,11 @@ end
 module Clauses = struct
   let is_fact exp = 
     let re = regexp {|\(.+\)\.|} in
-    string_match re exp 0 && Terms.is_compound (matched_group 1 exp)
+    string_match re exp 0 && Terms.is_compound (matched_group 1 exp) && string_match re exp 0 
 
   let is_neg exp = 
     let re = regexp {|\\\+ \(.+\)\.|} in
-    string_match re exp 0 && Terms.is_compound (matched_group 1 exp)
+    string_match re exp 0 && Terms.is_compound (matched_group 1 exp) && string_match re exp 0 
 
   let fact_or_neg exp = is_fact (exp^".") || is_neg (exp^".")
 
@@ -48,7 +48,7 @@ module Clauses = struct
     try
       let head = (Str.matched_group 1 exp) in 
       let body = (Str.matched_group 5 exp) in 
-      b  && fact_or_neg head && fact_or_neg body
+      b  && fact_or_neg head && fact_or_neg body && string_match re exp 0 
     with |_ -> false
 
   let is_conj exp =
