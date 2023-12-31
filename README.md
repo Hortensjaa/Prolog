@@ -25,7 +25,7 @@ $ dune exec prolog
 ## Testing
 
 Tests for this project were written with [Alcotest](https://github.com/mirage/alcotest).
-All needed to run them is:
+To run them, type:
 ```
 $ dune runtest
 ```

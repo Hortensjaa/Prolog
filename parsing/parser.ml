@@ -21,7 +21,6 @@ let rec parse_term exp =
   else if (is_number exp) then Num(int_of_string exp)
   else if (is_compound exp) then
     let args_list = extract_text (Str.full_split (Str.regexp "[']") exp) [] in
-    print_endline ("[" ^ String.concat "; " args_list ^ "]");
     match args_list with
     | hd::tl when (is_atom hd) -> 
       let parsed_args = (List.map parse_term tl) in
