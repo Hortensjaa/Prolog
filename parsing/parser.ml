@@ -1,10 +1,10 @@
 open Str
 
-open Regex.Re
 open Structure
 
 
 let rec parse_term exp = 
+  let open Regex.Terms in
 
   let rec extract_text splitted to_parse_list =
     match splitted with
@@ -27,3 +27,16 @@ let rec parse_term exp =
       Comp(Atom(hd), parsed_args)
     | _ -> failwith ("parse: not a compound - [" ^ String.concat "; " args_list ^ "]")
   else failwith ("parse: not a term - " ^ exp)
+
+
+(* let parse_clause exp =
+  let open Regex.Clauses in
+  if (is_fact exp) then
+    let head = matched_group 1 exp in 
+    Fact(parse_term head)
+  else if (is_rule exp) then 
+    let head = matched_group 1 exp in 
+    let body = matched_group 2 exp in 
+    let body_args = (split (regexp {|), |}) body) in
+    Fact(parse_term head)
+  else failwith ("parse: not a clause - " ^ exp) *)

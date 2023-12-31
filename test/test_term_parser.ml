@@ -24,27 +24,27 @@ let test_parse_number () =
   (check bool) "is_num" true (result=expected)
 
 let test_parse_comp1arg () =
-  let result = parse_term "human(you)." in
+  let result = parse_term "human(you)" in
   let expected = Comp(Atom("human"), [Atom("you")]) in
   (check bool) "comp1arg" true (result=expected)
 
 let test_parse_comp2args () =
-  let result = parse_term "father(John, mary)." in
+  let result = parse_term "father(John, mary)" in
   let expected = Comp(Atom("father"), [Var("John"); Atom("mary")]) in
   (check bool) "comp2args" true (result=expected)
 
 let test_parse_comp3args () =
-  let result = parse_term "employee(Name, Surname, Salary)." in
+  let result = parse_term "employee(Name, Surname, Salary)" in
   let expected = Comp(Atom("employee"), [Var("Name"); Var("Surname"); Var("Salary")]) in
   (check bool) "comp3args" true (result=expected)
 
 let test_parse_comp_with_quotes1 () =
-  let result = parse_term "series('Bojack Horseman', 2014)." in
+  let result = parse_term "series('Bojack Horseman', 2014)" in
   let expected = Comp(Atom("series"), [Atom("'Bojack Horseman'"); Num(2014)]) in
   (check bool) "comp_with_quotes1" true (result=expected)
 
 let test_parse_comp_with_quotes2 () =
-  let result = parse_term "'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')." in
+  let result = parse_term "'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')" in
   let expected = 
     Comp(Atom("'book of the year'"), [Atom("'Watership Down'"); Atom("adams"); Num(1972); Atom("'You try to eat grass that is not there.'")]) in
   (check bool) "comp_with_quotes2" true (result=expected)

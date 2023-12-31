@@ -6,7 +6,10 @@ type term =
 
 type clause = 
 | Fact of term
-| Rule of term * term list
+| Negation of term
+| Rule of clause * clause         (* implication *)
+| CRule of clause * clause list   (* implication with conjunction *)
+| DRule of clause * clause list   (* implication with disjunction *)
 
 type program = clause list
 type query   = term list
