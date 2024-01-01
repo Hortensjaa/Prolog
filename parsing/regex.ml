@@ -29,16 +29,19 @@ module Terms = struct
 
   let is_term exp =
     is_atom exp || is_var exp || is_number exp || is_compound exp
+
+  let comp_or_atom exp =
+    is_atom exp || is_compound exp
 end
 
 module Clauses = struct
   let is_fact exp = 
     let re = regexp {|\(.+\)\.|} in
-    string_match re exp 0 && Terms.is_compound (matched_group 1 exp) && string_match re exp 0 
+    string_match re exp 0 && Terms.comp_or_atom (matched_group 1 exp) && string_match re exp 0 
 
   let is_neg exp = 
     let re = regexp {|\\\+ \(.+\)\.|} in
-    string_match re exp 0 && Terms.is_compound (matched_group 1 exp) && string_match re exp 0 
+    string_match re exp 0 && Terms.comp_or_atom (matched_group 1 exp) && string_match re exp 0 
 
   let fact_or_neg exp = is_fact (exp^".") || is_neg (exp^".")
 
@@ -52,10 +55,10 @@ module Clauses = struct
     with |_ -> false
 
   let is_conj exp =
-    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(.+\)\(,\( \\\+\)? \(.+\)\)+\.|} in
-    string_match re exp 0 && fact_or_neg (matched_group 1 exp)
+    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(\(.+\)\(,\( \\\+\)? \(.+\)\)+\)\.|} in
+    string_match re exp 0 && fact_or_neg (matched_group 1 exp) && string_match re exp 0 
 
   let is_disj exp =
-    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(.+\)\(;\( \\\+\)? \(.+\)\)+\.|}in
-    string_match re exp 0 && fact_or_neg (matched_group 1 exp)
+    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(\(.+\)\(;\( \\\+\)? \(.+\)\)+\)\.|} in
+    string_match re exp 0 && fact_or_neg (matched_group 1 exp) && string_match re exp 0 
 end

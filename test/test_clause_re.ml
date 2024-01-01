@@ -3,7 +3,7 @@ open Parsing.Regex.Clauses
 
 let test_is_fact () =
   let test_strings = 
-    ["series('Bojack Horseman', 2014)."; "human(you)."; "employee(Name, Surname, Salary).";
+    ["series('Bojack Horseman', 2014)."; "human(you)."; "employee(Name, Surname, Salary)."; "fact.";
     "'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')."] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_fact exp)
@@ -11,7 +11,7 @@ let test_is_fact () =
 
 let test_is_neg () =
   let test_strings = 
-    ["\\+ series('Bojack Horseman', 2014)."; "\\+ human(you)."; "\\+ employee(Name, Surname, Salary).";
+    ["\\+ series('Bojack Horseman', 2014)."; "\\+ human(you)."; "\\+ employee(Name, Surname, Salary)."; "\\+ fact.";
     "\\+ 'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')."] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_neg exp)
@@ -19,28 +19,30 @@ let test_is_neg () =
 
 let test_is_rule () =
   let test_strings = 
-    ["mortal(X) :- human(X)."; "animal(X) :- \\+ human(X)."; "\\+ easy(Subject) :- subject('functional programming')."] in
+    ["animal(X) :- human(X)."; "odd(X) :- \\+ even(X)."; "\\+ easy :- subject('functional programming')."] in
   List.iter (fun exp ->
     (check bool) "is_rule" true (is_rule exp)
   ) test_strings
 
 let test_is_conj () =
   let test_strings = 
-    ["mother(X, Y) :- parent(X, Y), woman(X)."; "animal(X) :- \\+ plant(X), alive(X)."; "\\+ alive(X) :- \\+ plant(X), \\+ animal(X)."] in
+    ["mother(X, Y) :- parent(X, Y), woman(X)."; "animal(X) :- \\+ plant(X), \\+ fungus(X), alive(X)."; 
+    "\\+ 'song I like'(X) :- \\+ rock(X), \\+ 'hip hop'(X)."] in
   List.iter (fun exp ->
     (check bool) "is_conj" true (is_conj exp)
   ) test_strings
 
 let test_is_disj () =
   let test_strings = 
-    ["pet(X) :- rat(X); cat(X); dog(X)."; "\\+ mother(X) :- \\+ parent(X); \\+ woman(X)."; ] in
+    ["pet(X) :- rat(X); cat(X); dog(X)."; "\\+ mother(X, Y) :- \\+ parent(X, Y); \\+ woman(X)."; 
+    "\\+ black :- green; blue; yellow; pink."; "'nice day' :- sunny; \\+ 'below 15°C'."] in
   List.iter (fun exp ->
     (check bool) "is_disj" true (is_disj exp)
   ) test_strings
 
 let test_not_fact () =
   let test_strings = 
-    ["series('Bojack Horseman', 2014)"; "you."; "employee(Name) :- a(b)."] in
+    ["series('Bojack Horseman', 2014)"; "Var(x)."; "employee(Name) :- a(b)."] in
   List.iter (fun exp ->
     (check bool) "is_fact" false (is_fact exp)
   ) test_strings
