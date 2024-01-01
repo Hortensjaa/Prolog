@@ -3,7 +3,7 @@ open Parsing.Regex.Clauses
 
 let test_is_fact () =
   let test_strings = 
-    ["human(you)."; "employee(Name, Surname, Salary)."; "fact."; "0."] in
+    ["human(you)."; "employee(Name, Surname, Salary)."; "fact."] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_fact exp)
   ) test_strings
@@ -46,14 +46,15 @@ let test_not_fact () =
 
 let test_not_rule () =
   let test_strings = 
-    [ "father(John, mary)"; "(has_pets)(ania, cat, dog)."; "Human(you)."] in
+    [ "father(John, mary)"; "(has_pets)(ania, cat, dog)."; "Human(you)."; "X."] in
   List.iter (fun exp ->
     (check bool) "is_rule" false (is_rule exp)
   ) test_strings
 
 let test_not_conj () =
   let test_strings = 
-    ["\\+ mother(X) :- \\+ parent(X); \\+ woman(X)."; "animal(X) :- \\+ human(X)."; "employee(Name, Surname, Salary)."] in
+    ["\\+ mother(X) :- \\+ parent(X); \\+ woman(X)."; "animal(X) :- \\+ human(X)."; 
+    "employee(Name, Surname, Salary)." ;"X :- woman(X), Y."] in
   List.iter (fun exp ->
     (check bool) "is_conj" false (is_conj exp)
   ) test_strings

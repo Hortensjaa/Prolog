@@ -9,14 +9,12 @@ let test_parse_atom () =
   (check bool) "is_atom1" true (result=expected)
 
 let test_parse_variable () =
-  let result = parse_term "X" in
-  let expected = Var("X") in
-  (check bool) "is_var" true (result=expected)
+  let test_fn = (fun () -> let _ = (parse_term "X") in ()) in
+  check_raises "parsing free variable" (Failure "parse: illegal free variable") test_fn
 
 let test_parse_number () =
-  let result = parse_term "123" in
-  let expected = Num(123) in
-  (check bool) "is_num" true (result=expected)
+  let test_fn = (fun () -> let _ = (parse_term "123") in ()) in
+  check_raises "parsing free variable" (Failure "parse: illegal free number") test_fn
 
 let test_parse_comp1arg () =
   let result = parse_term "human(you)" in
@@ -25,12 +23,12 @@ let test_parse_comp1arg () =
 
 let test_parse_comp2args () =
   let result = parse_term "father(John, mary)" in
-  let expected = Comp(Atom("father"), [Var("John"); Atom("mary")]) in
+  let expected = Comp(Atom("father"), [VarS("John"); Atom("mary")]) in
   (check bool) "comp2args" true (result=expected)
 
 let test_parse_comp3args () =
   let result = parse_term "employee(Name, Surname, Salary)" in
-  let expected = Comp(Atom("employee"), [Var("Name"); Var("Surname"); Var("Salary")]) in
+  let expected = Comp(Atom("employee"), [VarS("Name"); VarS("Surname"); VarS("Salary")]) in
   (check bool) "comp3args" true (result=expected)
 
 let test_invalid_input1 () =
