@@ -3,7 +3,7 @@ open Parsing.Regex.Clauses
 
 let test_is_fact () =
   let test_strings = 
-    ["human(you)."; "employee(Name, Surname, Salary)."; "fact."] in
+    ["human(you)."; "employee(Name, Surname, Salary)."; "fact."; "0."] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_fact exp)
   ) test_strings
