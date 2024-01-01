@@ -2,7 +2,7 @@ open Alcotest
 open Parsing.Regex.Terms
 
 let test_is_atom () =
-  let test_strings = ["test"; "'test'"; "'Some test'"; "is_atom"] in
+  let test_strings = ["test"; "is_atom"] in
   List.iter (fun exp ->
     (check bool) "is_atom" true (is_atom exp)
   ) test_strings
@@ -21,8 +21,8 @@ let test_is_number () =
 
 let test_is_comp () =
   let test_strings = 
-    ["series('Bojack Horseman', 2014)"; "human(you)"; "employee(Name, Surname, Salary)";
-    "'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')"] in
+    ["series(bojack_horseman, 2014)"; "human(you)"; "employee(Name, Surname, Salary)";
+    "book(watership_down, adams, richard, 1972)"] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_compound exp)
   ) test_strings
@@ -47,7 +47,7 @@ let test_not_number () =
 
 let test_not_comp () =
   let test_strings = 
-    ["father'(John, mary)'"; "(has_pets)(ania, cat, dog)."; "Human(you)."] in
+    ["father'(John, mary)'"; "has pets(ania, cat, dog)"; "Human(you)"] in
   List.iter (fun exp ->
     (check bool) "is_compound" false (is_compound exp)
   ) test_strings

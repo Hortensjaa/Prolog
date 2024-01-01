@@ -3,23 +3,21 @@ open Parsing.Regex.Clauses
 
 let test_is_fact () =
   let test_strings = 
-    ["series('Bojack Horseman', 2014)."; "human(you)."; "employee(Name, Surname, Salary)."; "fact.";
-    "'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')."] in
+    ["human(you)."; "employee(Name, Surname, Salary)."; "fact."] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_fact exp)
   ) test_strings
 
 let test_is_neg () =
   let test_strings = 
-    ["\\+ series('Bojack Horseman', 2014)."; "\\+ human(you)."; "\\+ employee(Name, Surname, Salary)."; "\\+ fact.";
-    "\\+ 'book of the year'('Watership Down', adams, 1972, 'You try to eat grass that is not there.')."] in
+    ["\\+ human(you)."; "\\+ employee(Name, Surname, Salary)."; "\\+ fact."] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_neg exp)
   ) test_strings
 
 let test_is_rule () =
   let test_strings = 
-    ["animal(X) :- human(X)."; "odd(X) :- \\+ even(X)."; "\\+ easy :- subject('functional programming')."] in
+    ["animal(X) :- human(X)."; "odd(X) :- \\+ even(X)."; "\\+ easy :- subject(functional_programming)."] in
   List.iter (fun exp ->
     (check bool) "is_rule" true (is_rule exp)
   ) test_strings
@@ -27,15 +25,14 @@ let test_is_rule () =
 let test_is_conj () =
   let test_strings = 
     ["mother(X, Y) :- parent(X, Y), woman(X)."; "animal(X) :- \\+ plant(X), \\+ fungus(X), alive(X)."; 
-    "\\+ 'song I like'(X) :- \\+ rock(X), \\+ 'hip hop'(X)."] in
+    "\\+ song_i_like(X) :- \\+ rock(X), \\+ rap(X)."] in
   List.iter (fun exp ->
     (check bool) "is_conj" true (is_conj exp)
   ) test_strings
 
 let test_is_disj () =
   let test_strings = 
-    ["pet(X) :- rat(X); cat(X); dog(X)."; "\\+ mother(X, Y) :- \\+ parent(X, Y); \\+ woman(X)."; 
-    "\\+ black :- green; blue; yellow; pink."; "'nice day' :- sunny; \\+ 'below 15°C'."] in
+    ["pet(X) :- rat(X); cat(X); dog(X)."; "\\+ mother(X, Y) :- \\+ parent(X, Y); \\+ woman(X)."; "\\+ black :- green; blue; yellow; pink."] in
   List.iter (fun exp ->
     (check bool) "is_disj" true (is_disj exp)
   ) test_strings

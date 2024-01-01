@@ -3,8 +3,7 @@ open Str
 module Terms = struct
   let is_atom exp = 
     let not_capitalised = regexp {|[a-z][A-Za-z0-9_]*$|} in
-    let in_quotes = regexp {|'\(.+\)'$|} in
-    string_match not_capitalised exp 0 || string_match in_quotes exp 0
+    string_match not_capitalised exp 0
 
   let is_var exp = 
     let capitalised = regexp {|[A-Z][A-Za-z0-9_]*$|} in
@@ -24,7 +23,7 @@ module Terms = struct
     string_match re exp 0
 
   let is_compound exp = 
-    let re = regexp {|\(\([a-z][A-Za-z0-9_]*\)\|\('.+'\)\)(\(\([A-Za-z0-9_]+\)\|\('.+'\)\)\(, \(\([A-Za-z0-9_]+\)\|\('.+'\)\)\)*)$|} in
+    let re = regexp {|\([a-z][A-Za-z0-9_]*\)(\([A-Za-z0-9_]+\)\(, \(\([A-Za-z0-9_]+\)\|\(\[.*\(, .*\)*\]\)\)\)*)$|} in
     string_match re exp 0
 
   let is_term exp =
