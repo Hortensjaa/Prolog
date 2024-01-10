@@ -1,6 +1,6 @@
 open Alcotest
 
-open Parsing.Parser
+open Parsing.Helpers
 open Structure
 
 let test_parse_atom () =

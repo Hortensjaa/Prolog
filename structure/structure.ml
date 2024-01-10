@@ -1,7 +1,5 @@
-type var = term option ref
-and term =
-  | Var of var          (* zmienna ze wskaznikiem *)
-  | VarS of string      (* zmienna na etapie parsowania, przed ustawieniem wskaznikow *)
+type term =
+  | VarS of string
   | Num of int
   | Atom of string
   | Comp of term * term list
@@ -9,9 +7,7 @@ and term =
 type term_state = term * bool   (* czy zmienna jest niezanegowana *)
 and clause = 
 | Fact of term_state
-| Rule of term_state * term_state         (* implication *)
-| CRule of term_state * term_state list   (* implication with conjunction *)
-| DRule of term_state * term_state list   (* implication with disjunction *)
+| Rule of term_state * term_state list       (* implication *)
 
 type program = clause list
 type query   = term list
