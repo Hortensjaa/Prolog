@@ -31,7 +31,6 @@ let parse_clause exp =
   let open Regex.Clauses in
 
   let parse_with_state exp =
-    print_endline exp;
     let re = regexp {|\(\\\+ \)?\(.+\)$|}  in
     let b = Str.string_match re exp 0 in
     if (b) then 
