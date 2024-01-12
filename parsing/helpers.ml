@@ -15,7 +15,7 @@ let rec parse_term_helper exp =
       let parsed_args = (List.map parse_term_helper tl) in
       Comp(Atom(hd), parsed_args)
     | _ -> failwith "parse: something went very wrong"
-  else failwith "parse: not a term"
+  else failwith ("parse: " ^ exp ^ " is not a term")
 
 
 let parse_term exp = 

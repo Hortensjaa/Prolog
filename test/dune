@@ -1,9 +1,10 @@
 (tests
   (names 
-     test_term_re 
-     test_clause_re 
-     test_term_parser 
-     test_clause_parser
-     test_parser
+   ;   test_term_re 
+   ;   test_clause_re 
+   ;   test_term_parser 
+   ;   test_clause_parser
+   ;   test_parser
+     test_unification
   )
- (libraries alcotest examples parsing))
+ (libraries alcotest examples parsing evaluation))

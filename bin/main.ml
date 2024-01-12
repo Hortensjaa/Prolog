@@ -1,4 +1,8 @@
-let () = print_endline "a"
-  (* Format.printf "%a" Sexp.pp_hum ([%sexp_of: Structure.term] (Structure.Atom("sd"))) *)
+let ht = Hashtbl.create 10
+
+
+let () = 
+  Hashtbl.add ht "1" 2;
+  print_endline (string_of_int(Hashtbl.length ht))
 
 
