@@ -1,4 +1,4 @@
-open Structure
+open Structure.Ast
 
 (* 
   Family tree with recursive rule:

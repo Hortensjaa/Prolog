@@ -1,8 +1,5 @@
-let ht = Hashtbl.create 10
-
-
 let () = 
-  Hashtbl.add ht "1" 2;
-  print_endline (string_of_int(Hashtbl.length ht))
+  let res = (Evaluation.Eval.eval "parent(X, Y)" "parent(ania, basia).") in
+  print_endline (if (res) then "true" else "false")
 
 

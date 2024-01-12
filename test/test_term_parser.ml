@@ -1,7 +1,7 @@
 open Alcotest
 
 open Parsing.Helpers
-open Structure
+open Structure.Ast
 
 let test_parse_atom () =
   let result = parse_term "hello" in
@@ -34,12 +34,12 @@ let test_parse_comp3args () =
 let test_invalid_input1 () =
   let not_term = "invalid input" in
   let test_fn = (fun () -> let _ = (parse_term not_term) in ()) in
-  check_raises "parsing invalid input" (Failure "parse: invalid input not a term") test_fn
+  check_raises "parsing invalid input" (Failure "parse: invalid input is not a term") test_fn
 
 let test_invalid_input2 () =
   let not_term = "Father(Adam, Anna)." in
   let test_fn = (fun () -> let _ = (parse_term not_term) in ()) in
-  check_raises "parsing invalid input" (Failure "parse: Father(Adam, Anna). not a term") test_fn
+  check_raises "parsing invalid input" (Failure "parse: Father(Adam, Anna). is not a term") test_fn
 
 let () =
   let open Alcotest in

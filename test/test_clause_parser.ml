@@ -1,7 +1,7 @@
 open Alcotest
 
 open Parsing.Helpers
-open Structure
+open Structure.Ast
 
 let mother_str = "mother(X, Y)" 
 let parent_str = "parent(X, Y)"

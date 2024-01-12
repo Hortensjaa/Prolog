@@ -1,4 +1,4 @@
-open Structure
+open Structure.Ast
 
 (* 
   Very simple 3-facts clauses list

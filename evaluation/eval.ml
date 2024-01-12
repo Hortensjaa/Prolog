@@ -1,4 +1,5 @@
-open Structure
+open Structure.Ast
+open Structure.Print
 open Parsing
 
 exception CantUnify
@@ -27,7 +28,9 @@ let eval exp clauses =
     match clauses_list with
     | Fact((f, true))::rst -> 
       (try  
-        let _ = (unify exp f) in true 
+        let vars = (unify exp f) in 
+        Hashtbl.iter (fun k v -> print_endline (k ^ ": " ^ term_to_string v)) vars;
+        true 
         with CantUnify -> eval_loop rst)
     | Fact((_, false))::_ -> failwith "not implemented"
     | Rule((_, true), _)::_ -> failwith "not implemented"

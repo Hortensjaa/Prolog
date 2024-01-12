@@ -2,7 +2,7 @@ open Alcotest
 
 open Evaluation.Eval
 open Parsing.Helpers
-open Structure
+open Structure.Ast
 
 
 let test_1 () =

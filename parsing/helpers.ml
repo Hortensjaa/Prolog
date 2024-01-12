@@ -1,6 +1,6 @@
 open Str
 
-open Structure
+open Structure.Ast
 
 let rec parse_term_helper exp =
   let open Regex.Terms in
