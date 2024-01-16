@@ -7,7 +7,7 @@ open Structure.Ast
           --- ania --- basia --- piotr
 *)
 
-let family_tree2 = 
+let clauses = 
  "woman(ania).
   woman(basia).
   man(X) :- \\+ woman(X).

@@ -25,6 +25,9 @@ let unify t1 t2 =
     | VarS(_), VarS(x)-> 
       Hashtbl.add vars x t1; 
       t1
+    | _, VarS(x) -> 
+      Hashtbl.add vars x t1;
+      t1
     | Comp(f1, args1), Comp(f2, args2) when (f1=f2 && List.length args1 = List.length args2) -> Comp(f1, List.map2 unify_loop args1 args2)
     | _ -> raise CantUnify in
     
@@ -32,7 +35,7 @@ let unify t1 t2 =
 
   
 
-let rec eval query clauses = 
+let eval query clauses = 
 
   let rec substitute term dict =
     match term with
@@ -51,21 +54,29 @@ let rec eval query clauses =
     match clauses_list with
     | Fact((f, true))::rst -> 
       (try  
-        let vars = (unify q f) in    
+        (* jak da się zunifikować, to skończyliśmy i mamy wynik w tej gałęzi *)
+        let vars = (unify q f) in 
+        (* print_endline (term_to_string f);    *)
         Hashtbl.iter (fun k v -> Hashtbl.replace all_vars k v) vars;
         true 
+        (* jak nie, to sprawdzamy dalej klauzule *)
         with CantUnify -> eval_loop q rst)
 
     | Fact((_, false))::_ -> failwith "not implemented"
     | Rule((hd, true), bd)::rst -> 
       (try  
+        (* jeśli da się zunifikować... *)
         let vars = (unify q hd) in 
+        (* podstawiamy wartości zmiennych, które mamy do warunków *)
         let args = (List.map (fun (term, state) -> (substitute term vars, state)) bd) in 
+        (* ewaluujemy warunki *)
         let results = List.map (fun (term, state) -> if (state) then (eval_loop term clauses) else (not (eval_loop term clauses))) args in
         (try 
+          (* jeśli na liście był jakiś false, to znaczy, że jakiegoś warunku nie daliśmy rady udowodnić, czyli reguła nie jest spełniona *)
           let _ = List.find (fun a -> (a=false)) results in
           false
           with Not_found -> true) 
+        (* jeśli nie da się zunifikować, idziemy dalej *)
         with CantUnify -> eval_loop q rst)
     | Rule((_, false), _)::_ -> failwith "not implemented"
     | [] -> false in

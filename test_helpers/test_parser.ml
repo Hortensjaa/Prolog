@@ -4,27 +4,27 @@ open Parsing.Parser
 open Examples
 
 let test_parse_1 () =
-  let result = parse Parents.parents in
+  let result = parse Parents.clauses in
   let expected = Parents.parsed in
   (check bool) "parse_1" true (result=expected)
 
 let test_parse_2 () =
-  let result = parse Family_tree1.family_tree1 in
+  let result = parse Family_tree1.clauses in
   let expected = Family_tree1.parsed in
   (check bool) "parse_2" true (result=expected)
 
 let test_parse_3 () =
-  let result = parse Family_tree2.family_tree2 in
+  let result = parse Family_tree2.clauses in
   let expected = Family_tree2.parsed in
   (check bool) "parse_3" true (result=expected)
 
 let test_parse_4 () =
-  let result = parse Family_tree3.family_tree3 in
+  let result = parse Family_tree3.clauses in
   let expected = Family_tree3.parsed in
   (check bool) "parse_4" true (result=expected)
 
 let test_parse_5 () =
-  let result = parse Ancestors.family_tree3 in
+  let result = parse Ancestors.clauses in
   let expected = Ancestors.parsed in
   (check bool) "parse_5" true (result=expected)
 

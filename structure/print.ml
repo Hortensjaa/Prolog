@@ -4,7 +4,7 @@ open Ast
 let rec term_struct_to_string t =
 
   let body_to_str bd =
-    String.concat "; " (List.map term_struct_to_string bd)
+    String.concat ", " (List.map term_struct_to_string bd)
   in
 
   match t with
@@ -18,7 +18,7 @@ let rec term_struct_to_string t =
 let rec term_to_string t = 
 
   let body_to_str bd =
-    String.concat "; " (List.map term_to_string bd)
+    String.concat ", " (List.map term_to_string bd)
   in
 
   match t with

@@ -3,7 +3,7 @@ open Structure.Ast
 (* 
   Very simple 3-facts clauses list
 *)
-let parents = 
+let clauses = 
  "parent(olek, kacper).
   parent(olek, ania).
   parent(hania, kasia)."
