@@ -31,6 +31,16 @@ let test_parse_comp3args () =
   let expected = Comp(Atom("employee"), [VarS("Name"); VarS("Surname"); VarS("Salary")]) in
   (check bool) "comp3args" true (result=expected)
 
+let test_parse_comp_nested1 () =
+  let result = parse_term "a(p(q), f)" in
+  let expected = Comp(Atom("a"), [Comp(Atom("p"), [Atom("q")]); Atom("f")]) in
+  (check bool) "comp_nested" true (result=expected)
+
+let test_parse_comp_nested2 () =
+  let result = parse_term "a(p(q), f(x, y), g(p))" in
+  let expected = Comp(Atom("a"), [Comp(Atom("p"), [Atom("q")]); Comp(Atom("f"), [Atom("x"); Atom("y")]); Comp(Atom("g"), [Atom("p")])]) in
+  (check bool) "comp_nested" true (result=expected)
+
 let test_invalid_input1 () =
   let not_term = "invalid input" in
   let test_fn = (fun () -> let _ = (parse_term not_term) in ()) in
@@ -61,6 +71,12 @@ let () =
     ];
     "parse_comp3args", [
       test_case "parse comp3args" `Quick test_parse_comp3args;
+    ];
+    "parse_comp_nested1", [
+      test_case "parse comp nested" `Quick test_parse_comp_nested1;
+    ];
+    "parse_comp_nested2", [
+      test_case "parse comp nested" `Quick test_parse_comp_nested2;
     ];
     "invalid_input1", [
       test_case "invalid input1" `Quick test_invalid_input1;

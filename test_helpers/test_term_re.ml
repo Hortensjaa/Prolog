@@ -22,7 +22,7 @@ let test_is_number () =
 let test_is_comp () =
   let test_strings = 
     ["series(bojack_horseman, 2014)"; "human(you)"; "employee(Name, Surname, Salary)";
-    "book(watership_down, adams, richard, 1972)"] in
+    "book(watership_down, adams, richard, 1972)"; "p(a, g(Y))"] in
   List.iter (fun exp ->
     (check bool) "is_compound" true (is_compound exp)
   ) test_strings

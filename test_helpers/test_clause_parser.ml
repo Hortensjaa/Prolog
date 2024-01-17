@@ -6,9 +6,11 @@ open Structure.Ast
 let mother_str = "mother(X, Y)" 
 let parent_str = "parent(X, Y)"
 let man_str = "man(X)"
+let woman_str = "woman(X)"
 let mother_term = Comp(Atom("mother"), [VarS("X"); VarS("Y")])
 let parent_term = Comp(Atom("parent"), [VarS("X"); VarS("Y")])
 let man_term = Comp(Atom("man"), [VarS("X")])
+let woman_term = Comp(Atom("woman"), [VarS("X")])
 
 let pos_str = "positive"
 let neg_str = "negative"
@@ -66,6 +68,11 @@ let test_parse_conj3 () =
   let expected = Rule((pos_term, true), [(neg_term, false); (zero_term, false); (Atom("true"), true)]) in
   (check bool) "parse_conj3" true (result=[expected])
 
+let test_parse_conj4 () =
+  let result = parse_clause (mother_str ^ " :- " ^ parent_str  ^ ", " ^ woman_str ^ ".") in
+  let expected = Rule((mother_term, true), [(parent_term, true); (woman_term, true)]) in
+  (check bool) "parse_conj4" true (result=[expected])
+
 let () =
   let open Alcotest in
   run "Clauses' parser tests" [
@@ -95,5 +102,8 @@ let () =
     ];
     "test_parse_conj3", [
       test_case "test_parse_conj" `Quick test_parse_conj3;
+    ];
+    "test_parse_conj4", [
+      test_case "test_parse_conj" `Quick test_parse_conj4;
     ];
   ]

@@ -23,7 +23,7 @@ module Terms = struct
     string_match re exp 0
 
   let is_compound exp = 
-    let re = regexp {|\([a-z][A-Za-z0-9_]*\)(\([A-Za-z0-9_]+\)\(, \(\([A-Za-z0-9_]+\)\|\(\[.*\(, .*\)*\]\)\)\)*)$|} in
+    let re = regexp {|\([a-z][A-Za-z0-9_]*\)\((\([A-Za-z0-9_]+[(]?[A-Za-z0-9_]*[)]?\)\(, \(\([A-Za-z0-9_]+[(]?[A-Za-z0-9_]*[)]?\)\|\(\[.*\(, .*\)*\]\)\)\)*)\)$|} in
     string_match re exp 0
 
   let is_term exp =

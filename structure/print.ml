@@ -13,6 +13,17 @@ let rec term_struct_to_string t =
   | VarS(v) -> ("Var(" ^ v ^ ")")
   | Comp(hd, bd) -> ("Comp(" ^ term_struct_to_string(hd) ^ ", [" ^ (body_to_str bd) ^ "])")
 
+(* print whole rules *)
+let rec clause_struct_to_string c =
+
+  let body_to_str bd =
+    String.concat ", " (List.map (fun (x, _) -> term_struct_to_string x) bd)
+  in
+
+  match c with
+  | Fact(f, _) -> "Fact(" ^ (term_struct_to_string f) ^ ")"
+  | Rule((hd, _), bd) -> "Rule(" ^ (term_struct_to_string hd) ^ ", [" ^ (body_to_str bd) ^ "])"
+
 
 (* to print values only *)
 let rec term_to_string t = 

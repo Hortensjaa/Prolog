@@ -25,7 +25,7 @@ let test_is_rule () =
 let test_is_conj () =
   let test_strings = 
     ["mother(X, Y) :- parent(X, Y), woman(X)."; "animal(X) :- \\+ plant(X), \\+ fungus(X), alive(X)."; 
-    "\\+ song_i_like(X) :- \\+ rock(X), \\+ rap(X)."] in
+    "\\+ song_i_like(X) :- \\+ rock(X), \\+ rap(X)."; "mother(M, C) :- woman(M), parent(M, C)."] in
   List.iter (fun exp ->
     (check bool) "is_conj" true (is_conj exp)
   ) test_strings

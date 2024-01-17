@@ -28,6 +28,11 @@ let test_parse_5 () =
   let expected = Ancestors.parsed in
   (check bool) "parse_5" true (result=expected)
 
+let test_parse_6 () =
+  let result = parse Complicated.clauses in
+  let expected = Complicated.parsed in
+  (check bool) "parse_6" true (result=expected)
+
 let () =
   run "Parser tests" [
     "test1", [
@@ -44,6 +49,9 @@ let () =
     ];
     "test5", [
       test_case "test5" `Quick test_parse_5;
+    ];
+    "test6", [
+      test_case "test6" `Quick test_parse_6;
     ];
   ]
 
