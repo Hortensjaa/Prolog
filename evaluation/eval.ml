@@ -46,42 +46,61 @@ let eval query clauses =
         with Not_found -> term)
     | Comp(f, args) -> Comp(substitute f dict, List.map (fun t -> substitute t dict) args) in
 
+    (* let find_index elem lst =
+      let rec find_index_loop i cur_lst =
+        match cur_lst with
+        | [] -> failwith "find_index: cant find element in list"
+        | e::_ when (e=elem)-> i
+        | _::rst -> find_index_loop (i+1) rst in
+      find_index_loop 0 lst in *)
+
+
   let query = Helpers.parse_term query in 
   let clauses = Parser.parse clauses in
   let all_vars = Hashtbl.create (count_vars 0 query) in
 
-  let rec eval_loop q clauses_list =
-    match clauses_list with
+  let rec eval_loop q clauses_iter =
+    match clauses_iter with
     | Fact((f, true))::rst -> 
       (try  
         (* jak da się zunifikować, to skończyliśmy i mamy wynik w tej gałęzi *)
         let vars = (unify q f) in 
-        (* print_endline (term_to_string f);    *)
+        (* dodajemy "odkryte" zmienne do słownika *)
         Hashtbl.iter (fun k v -> Hashtbl.replace all_vars k v) vars;
         true 
         (* jak nie, to sprawdzamy dalej klauzule *)
         with CantUnify -> eval_loop q rst)
 
     | Fact((_, false))::_ -> failwith "not implemented"
+
     | Rule((hd, true), bd)::rst -> 
       (try  
         (* jeśli da się zunifikować... *)
         let vars = (unify q hd) in 
         (* podstawiamy wartości zmiennych, które mamy do warunków *)
         let args = (List.map (fun (term, state) -> (substitute term vars, state)) bd) in 
+        (* numer klauzuli, którą aktualnie sprawdzamy *)
+        (* let index = find_index (List.hd clauses_iter) clauses in *)
         (* ewaluujemy warunki *)
-        let results = List.map (fun (term, state) -> if (state) then (eval_loop term clauses) else (not (eval_loop term clauses))) args in
+        let results = List.map (
+          fun (term, state) -> 
+            if (state) 
+              then (eval_loop term clauses) 
+              else (failwith "not implemented")
+          ) args in
         (try 
           (* jeśli na liście był jakiś false, to znaczy, że jakiegoś warunku nie daliśmy rady udowodnić, czyli reguła nie jest spełniona *)
           let _ = List.find (fun a -> (a=false)) results in
-          false
+          eval_loop q rst
           with Not_found -> true) 
         (* jeśli nie da się zunifikować, idziemy dalej *)
         with CantUnify -> eval_loop q rst)
+
     | Rule((_, false), _)::_ -> failwith "not implemented"
+    
     | [] -> false in
 
   let res = eval_loop query clauses in
-  Hashtbl.iter (fun k v -> print_endline (k ^ ": " ^ term_to_string v)) all_vars;
+  if (res) then Hashtbl.iter (fun k v -> print_endline (k ^ ": " ^ term_to_string v)) all_vars;
   res
 
