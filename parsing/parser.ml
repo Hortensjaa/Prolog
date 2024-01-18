@@ -1,6 +1,6 @@
 open Str
 
-open Helpers
+open Clause_parser
 
 
 let parse clauses =

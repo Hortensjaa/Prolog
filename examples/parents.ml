@@ -9,7 +9,7 @@ let clauses =
   parent(hania, kasia)."
 
 let parsed = [
-  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("kacper")])), true);
-  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("ania")])), true);
-  Fact((Comp(Atom("parent"), [Atom("hania"); Atom("kasia")])), true)
+  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("kacper")])));
+  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("ania")])));
+  Fact((Comp(Atom("parent"), [Atom("hania"); Atom("kasia")])))
 ]

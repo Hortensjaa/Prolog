@@ -1,7 +1,7 @@
 open Alcotest
 
 open Evaluation.Eval
-open Parsing.Helpers
+open Parsing.Term_parser
 open Structure.Ast
 
 

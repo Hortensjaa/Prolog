@@ -38,26 +38,20 @@ module Clauses = struct
     let re = regexp {|\(.+\)\.|} in
     string_match re exp 0 && Terms.comp_or_atom (matched_group 1 exp) && string_match re exp 0 
 
-  let is_neg exp = 
-    let re = regexp {|\\\+ \(.+\)\.|} in
-    string_match re exp 0 && Terms.comp_or_atom (matched_group 1 exp) && string_match re exp 0 
-
-  let fact_or_neg exp = is_fact (exp^".") || is_neg (exp^".")
-
   let is_rule exp =
-    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(\(\\\+ \)?\(.+\)\)\.|} in
+    let re = regexp {|\(.+\) :- \(\(\\\+ \)?\(.+\)\)\.|} in
     let b = Str.string_match re exp 0 in
     try
-      let head = (Str.matched_group 3 exp) in 
-      let body = (Str.matched_group 6 exp) in 
+      let head = (Str.matched_group 1 exp) in 
+      let body = (Str.matched_group 4 exp) in 
       b  && Terms.comp_or_atom head && Terms.is_term body && string_match re exp 0 
     with |_ -> false
 
   let is_conj exp =
-    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(\(.+\)\(,\( \\\+\)? \(.+\)\)+\)\.|} in
-    string_match re exp 0 && fact_or_neg (matched_group 1 exp) && string_match re exp 0 
+    let re = regexp {|\(.+\) :- \(\(.+\)\(, \(.+\)\)+\)\.|} in
+    string_match re exp 0 && is_fact ((matched_group 1 exp)^".") && string_match re exp 0 
 
   let is_disj exp =
-    let re = regexp {|\(\(\\\+ \)?\(.+\)\) :- \(\(.+\)\(;\( \\\+\)? \(.+\)\)+\)\.|} in
-    string_match re exp 0 && fact_or_neg (matched_group 1 exp) && string_match re exp 0 
+    let re = regexp {|\(.+\) :- \(\(.+\)\(; \(.+\)\)+\)\.|} in
+    string_match re exp 0 && is_fact ((matched_group 1 exp)^".") && string_match re exp 0 
 end

@@ -22,36 +22,36 @@ let clauses =
   sibling(X, Y) :- parent(Z, X), parent(Z, Y)."
 
 let parsed = [
-  Fact((Comp(Atom("man"), [Atom("olek")])), true);
-  Fact((Comp(Atom("man"), [Atom("kacper")])), true);
-  Fact((Comp(Atom("man"), [Atom("piotr")])), true);
-  Fact((Comp(Atom("woman"), [Atom("ania")])), true);
-  Fact((Comp(Atom("woman"), [Atom("basia")])), true);
+  Fact((Comp(Atom("man"), [Atom("olek")])));
+  Fact((Comp(Atom("man"), [Atom("kacper")])));
+  Fact((Comp(Atom("man"), [Atom("piotr")])));
+  Fact((Comp(Atom("woman"), [Atom("ania")])));
+  Fact((Comp(Atom("woman"), [Atom("basia")])));
 
-  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("kacper")])), true);
-  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("ania")])), true);
-  Fact((Comp(Atom("parent"), [Atom("ania"); Atom("basia")])), true);
-  Fact((Comp(Atom("parent"), [Atom("basia"); Atom("piotr")])), true);
+  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("kacper")])));
+  Fact((Comp(Atom("parent"), [Atom("olek"); Atom("ania")])));
+  Fact((Comp(Atom("parent"), [Atom("ania"); Atom("basia")])));
+  Fact((Comp(Atom("parent"), [Atom("basia"); Atom("piotr")])));
 
   Rule(
-    (Comp(Atom("father"), [VarS("F"); VarS("C")]), true),
+    (Comp(Atom("father"), [VarS("F"); VarS("C")])),
     [
-      (Comp(Atom("man"), [VarS("F")]), true);
-      (Comp(Atom("parent"), [VarS("F"); VarS("C")]), true)
+      (Comp(Atom("man"), [VarS("F")]));
+      (Comp(Atom("parent"), [VarS("F"); VarS("C")]))
     ]
   );
   Rule(
-    (Comp(Atom("mother"), [VarS("M"); VarS("C")]), true),
+    (Comp(Atom("mother"), [VarS("M"); VarS("C")])),
     [
-      (Comp(Atom("woman"), [VarS("M")]), true);
-      (Comp(Atom("parent"), [VarS("M"); VarS("C")]), true)
+      (Comp(Atom("woman"), [VarS("M")]));
+      (Comp(Atom("parent"), [VarS("M"); VarS("C")]))
     ]
   );
   Rule(
-    (Comp(Atom("sibling"), [VarS("X"); VarS("Y")]), true),
+    (Comp(Atom("sibling"), [VarS("X"); VarS("Y")])),
     [
-      (Comp(Atom("parent"), [VarS("Z"); VarS("X")]), true);
-      (Comp(Atom("parent"), [VarS("Z"); VarS("Y")]), true);
+      (Comp(Atom("parent"), [VarS("Z"); VarS("X")]));
+      (Comp(Atom("parent"), [VarS("Z"); VarS("Y")]));
     ]
   )
 ]

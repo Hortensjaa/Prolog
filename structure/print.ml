@@ -17,12 +17,12 @@ let rec term_struct_to_string t =
 let rec clause_struct_to_string c =
 
   let body_to_str bd =
-    String.concat ", " (List.map (fun (x, _) -> term_struct_to_string x) bd)
+    String.concat ", " (List.map term_struct_to_string bd)
   in
 
   match c with
-  | Fact(f, _) -> "Fact(" ^ (term_struct_to_string f) ^ ")"
-  | Rule((hd, _), bd) -> "Rule(" ^ (term_struct_to_string hd) ^ ", [" ^ (body_to_str bd) ^ "])"
+  | Fact(f) -> "Fact(" ^ (term_struct_to_string f) ^ ")"
+  | Rule(hd, bd) -> "Rule(" ^ (term_struct_to_string hd) ^ ", [" ^ (body_to_str bd) ^ "])"
 
 
 (* to print values only *)

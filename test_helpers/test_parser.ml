@@ -13,11 +13,6 @@ let test_parse_2 () =
   let expected = Family_tree1.parsed in
   (check bool) "parse_2" true (result=expected)
 
-let test_parse_3 () =
-  let result = parse Family_tree2.clauses in
-  let expected = Family_tree2.parsed in
-  (check bool) "parse_3" true (result=expected)
-
 let test_parse_4 () =
   let result = parse Family_tree3.clauses in
   let expected = Family_tree3.parsed in
@@ -40,9 +35,6 @@ let () =
     ];
     "test2", [
       test_case "test2" `Quick test_parse_2;
-    ];
-    "test3", [
-      test_case "test3" `Quick test_parse_3;
     ];
     "test4", [
       test_case "test4" `Quick test_parse_4;

@@ -17,35 +17,35 @@ let clauses =
   ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y)."
 
 let parsed = [
-  Fact((Comp(Atom("father"), [Atom("olek"); Atom("kacper")])), true);
-  Fact((Comp(Atom("father"), [Atom("olek"); Atom("ania")])), true);
-  Fact((Comp(Atom("mother"), [Atom("ania"); Atom("basia")])), true);
-  Fact((Comp(Atom("mother"), [Atom("basia"); Atom("piotr")])), true);
+  Fact((Comp(Atom("father"), [Atom("olek"); Atom("kacper")])));
+  Fact((Comp(Atom("father"), [Atom("olek"); Atom("ania")])));
+  Fact((Comp(Atom("mother"), [Atom("ania"); Atom("basia")])));
+  Fact((Comp(Atom("mother"), [Atom("basia"); Atom("piotr")])));
 
   Rule(
-    (Comp(Atom("parent"), [VarS("X"); VarS("Y")]), true),
+    (Comp(Atom("parent"), [VarS("X"); VarS("Y")])),
     [
-      (Comp(Atom("mother"), [VarS("X"); VarS("Y")]), true)
+      (Comp(Atom("mother"), [VarS("X"); VarS("Y")]))
     ]
   );
   Rule(
-    (Comp(Atom("parent"), [VarS("X"); VarS("Y")]), true),
+    (Comp(Atom("parent"), [VarS("X"); VarS("Y")])),
     [
-      (Comp(Atom("father"), [VarS("X"); VarS("Y")]), true)
+      (Comp(Atom("father"), [VarS("X"); VarS("Y")]))
     ]
   );
 
   Rule(
-    (Comp(Atom("ancestor"), [VarS("X"); VarS("Y")]), true),
+    (Comp(Atom("ancestor"), [VarS("X"); VarS("Y")])),
     [
-      (Comp(Atom("parent"), [VarS("X"); VarS("Y")]), true)
+      (Comp(Atom("parent"), [VarS("X"); VarS("Y")]))
     ]
   );
   Rule(
-    (Comp(Atom("ancestor"), [VarS("X"); VarS("Y")]), true),
+    (Comp(Atom("ancestor"), [VarS("X"); VarS("Y")])),
     [
-      (Comp(Atom("parent"), [VarS("X"); VarS("Z")]), true);
-      (Comp(Atom("ancestor"), [VarS("Z"); VarS("Y")]), true)
+      (Comp(Atom("parent"), [VarS("X"); VarS("Z")]));
+      (Comp(Atom("ancestor"), [VarS("Z"); VarS("Y")]))
     ]
   );
 ]

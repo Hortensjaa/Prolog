@@ -55,13 +55,13 @@ let eval query clauses =
       find_index_loop 0 lst in *)
 
 
-  let query = Helpers.parse_term query in 
+  let query = Term_parser.parse_term query in 
   let clauses = Parser.parse clauses in
   let all_vars = Hashtbl.create (count_vars 0 query) in
 
   let rec eval_loop q clauses_iter backtrack =
     match clauses_iter with
-    | Fact((f, true))::rst -> 
+    | Fact(f)::rst -> 
       (try  
         (* jak da się zunifikować, to skończyliśmy i mamy wynik w tej gałęzi *)
         let vars = (unify q f) in 
@@ -71,23 +71,16 @@ let eval query clauses =
         (* jak nie, to sprawdzamy dalej klauzule *)
         with CantUnify -> eval_loop q rst backtrack)
 
-    | Fact((_, false))::_ -> failwith "not implemented"
-
-    | Rule((hd, true), bd)::rst -> 
+    | Rule(hd, bd)::rst -> 
       (try  
         (* jeśli da się zunifikować... *)
         let vars = (unify q hd) in 
         (* podstawiamy wartości zmiennych, które mamy do warunków *)
-        let args = (List.map (fun (term, state) -> (substitute term vars, state)) bd) in 
+        let args = (List.map (fun term -> substitute term vars) bd) in 
         (* numer klauzuli, którą aktualnie sprawdzamy *)
         (* let index = find_index (List.hd clauses_iter) clauses in *)
         (* ewaluujemy warunki *)
-        let results = List.map (
-          fun (term, state) -> 
-            if (state) 
-              then (eval_loop term clauses backtrack) 
-              else (failwith "not implemented")
-          ) args in
+        let results = List.map (fun term -> eval_loop term clauses backtrack) args in
         (try 
           (* jeśli na liście był jakiś false, to znaczy, że jakiegoś warunku nie daliśmy rady udowodnić, czyli reguła nie jest spełniona *)
           let _ = List.find (fun a -> (a=false)) results in
@@ -95,8 +88,6 @@ let eval query clauses =
           with Not_found -> true) 
         (* jeśli nie da się zunifikować, idziemy dalej *)
         with CantUnify -> eval_loop q rst backtrack)
-
-    | Rule((_, false), _)::_ -> failwith "not implemented"
     
     | [] -> false in
 
