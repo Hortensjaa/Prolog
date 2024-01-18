@@ -59,7 +59,7 @@ let eval query clauses =
   let clauses = Parser.parse clauses in
   let all_vars = Hashtbl.create (count_vars 0 query) in
 
-  let rec eval_loop q clauses_iter =
+  let rec eval_loop q clauses_iter backtrack =
     match clauses_iter with
     | Fact((f, true))::rst -> 
       (try  
@@ -69,7 +69,7 @@ let eval query clauses =
         Hashtbl.iter (fun k v -> Hashtbl.replace all_vars k v) vars;
         true 
         (* jak nie, to sprawdzamy dalej klauzule *)
-        with CantUnify -> eval_loop q rst)
+        with CantUnify -> eval_loop q rst backtrack)
 
     | Fact((_, false))::_ -> failwith "not implemented"
 
@@ -85,22 +85,22 @@ let eval query clauses =
         let results = List.map (
           fun (term, state) -> 
             if (state) 
-              then (eval_loop term clauses) 
+              then (eval_loop term clauses backtrack) 
               else (failwith "not implemented")
           ) args in
         (try 
           (* jeśli na liście był jakiś false, to znaczy, że jakiegoś warunku nie daliśmy rady udowodnić, czyli reguła nie jest spełniona *)
           let _ = List.find (fun a -> (a=false)) results in
-          eval_loop q rst
+          eval_loop q rst backtrack
           with Not_found -> true) 
         (* jeśli nie da się zunifikować, idziemy dalej *)
-        with CantUnify -> eval_loop q rst)
+        with CantUnify -> eval_loop q rst backtrack)
 
     | Rule((_, false), _)::_ -> failwith "not implemented"
     
     | [] -> false in
 
-  let res = eval_loop query clauses in
+  let res = eval_loop query clauses [] in
   if (res) then Hashtbl.iter (fun k v -> print_endline (k ^ ": " ^ term_to_string v)) all_vars;
   res
 

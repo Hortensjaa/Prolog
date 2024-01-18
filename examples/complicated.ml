@@ -1,6 +1,7 @@
 open Structure.Ast
 
-(* more complicated, abstract case *)
+(* more complicated, abstract case 
+   source: https://stackoverflow.com/questions/65361713/backtracking-in-prolog*)
 let clauses = 
   "s(f(a)).
   t(g(b)).
