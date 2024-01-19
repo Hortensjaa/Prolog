@@ -28,3 +28,15 @@ let%test_unit "test father false1" =
 let%test_unit "test father false2" =
   [%test_eq: bool] (eval "father(ania, basia)" clauses) false
 
+(* let%test_unit "test siblings" =
+  [%test_eq: bool] (eval "siblings(ania, kacper)" clauses) true
+
+let%test_unit "test siblings2" =
+  [%test_eq: bool] (eval "siblings(kacper, ania)" clauses) true
+
+let%expect_test "test siblings3" = 
+  let _ = eval "siblings(X, Y)" clauses in ();
+  [%expect {|
+    X: kacper
+    Y: ania |}] *)
+

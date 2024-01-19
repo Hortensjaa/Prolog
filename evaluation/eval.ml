@@ -25,6 +25,7 @@ let unify t1 t2 =
     | VarS(_), VarS(x)-> 
       Hashtbl.add vars x t1; 
       t1
+      (* przypisanie wartości do drugiej zmiennej *)
     | _, VarS(x) -> 
       Hashtbl.add vars x t1;
       t1
@@ -45,15 +46,6 @@ let eval query clauses =
         let sub_term = Hashtbl.find dict x in sub_term
         with Not_found -> term)
     | Comp(f, args) -> Comp(substitute f dict, List.map (fun t -> substitute t dict) args) in
-
-    (* let find_index elem lst =
-      let rec find_index_loop i cur_lst =
-        match cur_lst with
-        | [] -> failwith "find_index: cant find element in list"
-        | e::_ when (e=elem)-> i
-        | _::rst -> find_index_loop (i+1) rst in
-      find_index_loop 0 lst in *)
-
 
   let query = Term_parser.parse_term query in 
   let clauses = Parser.parse clauses in
@@ -77,8 +69,6 @@ let eval query clauses =
         let vars = (unify q hd) in 
         (* podstawiamy wartości zmiennych, które mamy do warunków *)
         let args = (List.map (fun term -> substitute term vars) bd) in 
-        (* numer klauzuli, którą aktualnie sprawdzamy *)
-        (* let index = find_index (List.hd clauses_iter) clauses in *)
         (* ewaluujemy warunki *)
         let results = List.map (fun term -> eval_loop term clauses backtrack) args in
         (try 

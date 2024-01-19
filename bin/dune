@@ -1,6 +1,6 @@
 (executable
  (public_name prolog)
  (name main)
- (libraries parsing evaluation)
+ (libraries parsing evaluation examples)
 )
 
