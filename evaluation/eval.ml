@@ -1,5 +1,5 @@
 open Structure.Ast
-open Structure.Print
+open! Structure.Print
 open Parsing
 
 
@@ -81,7 +81,5 @@ let eval query clauses =
     
     | [] -> false in
 
-  let res = eval_loop query clauses [] in
-  if (res) then Hashtbl.iter (fun k v -> print_endline (k ^ ": " ^ term_to_string v)) all_vars;
-  res
+  let res = eval_loop query clauses [] in res
 
