@@ -1,6 +1,6 @@
 open Alcotest
 
-open Evaluation.Eval
+open Evaluation.Unification
 open Parsing.Term_parser
 open Structure.Ast
 
