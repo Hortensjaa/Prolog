@@ -8,7 +8,7 @@ open Structure.Ast
 let test_1 () =
   let t1 = parse_term "parent(X, Y)" in
   let t2 = parse_term "parent(ania, kasia)" in
-  let result = unify t1 t2 in
+  let result = unify t2 t1 in
   let expected = [("X", Atom("ania")); ("Y", Atom("kasia"))] in
   List.iter (fun pair -> (check bool) "test_1" true ((Hashtbl.find result (fst pair)) = (snd pair))) expected;
   (check int) "test_1" 2 (Hashtbl.length result)
@@ -16,7 +16,7 @@ let test_1 () =
 let test_2 () =
   let t1 = parse_term "parent(ania, Y)" in
   let t2 = parse_term "parent(ania, kasia)" in
-  let result = unify t1 t2 in
+  let result = unify t2 t1 in
   let expected = [("Y", Atom("kasia"))] in
   List.iter (fun pair -> (check bool) "test_2" true ((Hashtbl.find result (fst pair)) = (snd pair))) expected;
   (check int) "test_2" 1 (Hashtbl.length result)
@@ -24,7 +24,7 @@ let test_2 () =
 let test_3 () =
   let t1 = parse_term "a(X, Y, constant, Z)" in
   let t2 = parse_term "a(1, yval, constant, zval)" in
-  let result = unify t1 t2 in
+  let result = unify t2 t1 in
   let expected = [("X", Num(1)); ("Y", Atom("yval")); ("Z", Atom("zval"))] in
   List.iter (fun pair -> (check bool) "test_3" true ((Hashtbl.find result (fst pair)) = (snd pair))) expected;
   (check int) "test_2" 3 (Hashtbl.length result)

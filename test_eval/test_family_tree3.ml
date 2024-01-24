@@ -13,8 +13,7 @@ let%expect_test "test parent1" =
   [%expect {|
     X: ania |}]
 
-(* test using backtracking *)
-let%test_unit "test parent2" =
+let%test_unit "test parent2" = (* backtracking! *)
   [%test_eq: bool] (eval "parent(X, kacper)" clauses) true
 
 let%expect_test "test parent2" = 
