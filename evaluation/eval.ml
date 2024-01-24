@@ -54,7 +54,24 @@ let eval query clauses =
         with CantUnify -> eval_loop rst goals backtracking)
       | [] ->  
         begin match backtracking with
-        | clause_pair::b_rst -> 
+        | b_prev::b_next::b_rst -> 
+          (* cofamy się - od nowa ewaluujemy ostatnia klauzule z backtracking, a wczesniej usuwamy powiazane z nia cele z goals *)
+          let (prev_num, prev_term) = b_prev in
+          let (next_num, _) = b_next in
+          print_endline ("!backtrack " ^ (string_of_int prev_num) ^ " on clause " ^ (term_struct_to_string prev_term));
+          let new_goals = List.filter (fun (n, _) -> not (n=prev_num)) goals in
+
+          print_string "new goals: ["; 
+          List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) ((next_num, prev_term)::new_goals); 
+          print_string "]\n";
+          print_string "new backtrack: ["; 
+          List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) (b_next::b_rst); 
+          print_string "]\n\n";
+
+          (try eval_loop (List_helpers.from_nth clauses (prev_num+1)) ((next_num, prev_term)::new_goals) (b_next::b_rst) 
+          with List_helpers.OutOfBounds -> false)
+          
+        | clause_pair::[] -> 
           (* cofamy się - od nowa ewaluujemy ostatnia klauzule z backtracking, a wczesniej usuwamy powiazane z nia cele z goals *)
           let (prev_num, prev_term) = clause_pair in
           print_endline ("!backtrack " ^ (string_of_int prev_num) ^ " on clause " ^ (term_struct_to_string prev_term));
@@ -62,16 +79,15 @@ let eval query clauses =
           List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) goals; 
           print_string "]\n";
           let new_goals = List.filter (fun (n, _) -> not (n=prev_num)) goals in
-          (* let new_goal_from_prev = (, prev_clause) in *)
 
           print_string "new goals: ["; 
-          List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) (clause_pair::new_goals); 
+          List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) ((-1, prev_term)::new_goals); 
           print_string "]\n";
           print_string "new backtrack: ["; 
-          List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) b_rst; 
+          List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) []; 
           print_string "]\n\n";
 
-          (try eval_loop (List_helpers.from_nth clauses (prev_num+1)) (clause_pair::new_goals) b_rst 
+          (try eval_loop (List_helpers.from_nth clauses (prev_num+1)) ((-1, prev_term)::new_goals) [] 
           with List_helpers.OutOfBounds -> false)
           
         | [] ->  false end
