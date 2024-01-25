@@ -6,6 +6,14 @@ let rec count_vars counter term =
   | Comp(f, args) -> (count_vars counter f) + (List.fold_left (fun acc t -> (count_vars acc t)) 0 args)
   | _ -> counter
 
+let get_vars term =
+  let rec loop t lst : string list =
+    match t with
+    | Atom(_) | Num(_) -> lst
+    | VarS(x) -> x::lst
+    | Comp(f, args) -> (loop f lst)@(List.fold_left (fun acc arg -> loop arg acc) [] args) in
+  loop term []
+
 exception CantUnify
 let unify q t = 
   let vars = Hashtbl.create (count_vars 0 t) in

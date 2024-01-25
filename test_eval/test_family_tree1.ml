@@ -14,7 +14,12 @@ let%expect_test "test parent1" =
     X: ania |}]
 
 let%test_unit "test parent2" =
-  [%test_eq: bool] (eval "parent(olek, ania)" clauses) true
+  [%test_eq: bool] (eval "parent(F, ania)" clauses) true
+
+let%expect_test "test parent2" = 
+  let _ = eval "parent(F, ania)" clauses in ();
+  [%expect {|
+    F: olek |}]
 
 let%test_unit "test man" =
   [%test_eq: bool] (eval "man(olek)" clauses) true
@@ -28,15 +33,14 @@ let%test_unit "test father false1" =
 let%test_unit "test father false2" =
   [%test_eq: bool] (eval "father(ania, basia)" clauses) false
 
-(* let%test_unit "test siblings" =
-  [%test_eq: bool] (eval "siblings(ania, kacper)" clauses) true
+let%test_unit "test siblings" =
+  [%test_eq: bool] (eval "sibling(ania, kacper)" clauses) true
 
 let%test_unit "test siblings2" =
-  [%test_eq: bool] (eval "siblings(kacper, ania)" clauses) true
+  [%test_eq: bool] (eval "sibling(kacper, ania)" clauses) true
 
 let%expect_test "test siblings3" = 
-  let _ = eval "siblings(X, Y)" clauses in ();
+  let _ = eval "sibling(Z, ania)" clauses in ();
   [%expect {|
-    X: kacper
-    Y: ania |}] *)
+    Z: kacper |}]
 

@@ -18,5 +18,8 @@ let%test_unit "test ancestor4" =
   [%test_eq: bool] (eval "ancestor(ania, piotr)" clauses) true
 
 let%test_unit "test ancestor5" =
+  [%test_eq: bool] (eval "ancestor(ania, basia)" clauses) true
+
+let%test_unit "test ancestor6" =
   [%test_eq: bool] (eval "ancestor(kacper, piotr)" clauses) false
 
