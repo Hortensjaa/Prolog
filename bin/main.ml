@@ -1,5 +1,5 @@
 open Evaluation.Eval
 
 let () = 
-  let res = eval "parent(X, X)" Examples.Family_tree3.clauses in 
+  let res = eval "ancestor(X, piotr)" Examples.Ancestors.clauses in 
   print_endline (string_of_bool res);
