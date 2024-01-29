@@ -3,8 +3,9 @@ open Structure.Ast
 (* 
   Family tree:
           --- kacper
-  olek ---|
-          --- ania --- basia --- piotr
+  olek ---|                     --- ala
+          --- ania --- basia ---|
+                                --- piotr
 *)
 
 let clauses = 
@@ -16,6 +17,7 @@ let clauses =
   parent(olek, kacper).
   parent(olek, ania).
   parent(ania, basia).
+  parent(basia, ala).
   parent(basia, piotr).
   father(F, C) :- man(F), parent(F, C).
   mother(M, C) :- woman(M), parent(M, C).

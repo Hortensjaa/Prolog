@@ -15,21 +15,21 @@ let get_vars term =
   loop term []
 
 exception CantUnify
-let unify q t = 
-  let vars = Hashtbl.create (count_vars 0 t) in
+let unify t1 t2 = 
+  let vars = Hashtbl.create (count_vars 0 t2) in
 
-  let rec unify_loop q t =
-    match q, t with
-    | Atom(v1), Atom(v2) when (v1=v2) -> q
-    | Num(v1), Num(v2)  when (v1=v2)-> q
+  let rec unify_loop t1 t2 =
+    match t1, t2 with
+    | Atom(v1), Atom(v2) when (v1=v2) -> t1
+    | Num(v1), Num(v2)  when (v1=v2)-> t1
     | _, VarS(x) -> 
-      Hashtbl.add vars x q; 
-      t
-    | VarS(_), _ -> q
+      Hashtbl.add vars x t1; 
+      t2
+    | VarS(_), _ -> t1
     | Comp(f1, args1), Comp(f2, args2) when (f1=f2 && List.length args1 = List.length args2) -> Comp(f1, List.map2 unify_loop args1 args2)
     | _ -> raise CantUnify in
     
-  let _ = unify_loop q t in vars
+  let _ = unify_loop t1 t2 in vars
 
 let rec substitute term dict =
   match term with

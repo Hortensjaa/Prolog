@@ -2,7 +2,7 @@ open Structure.Ast
 
 (* 
   Family tree with recursive rule:
-          --- ania --- basia --- piotr
+          --- ania --- basia --- piotr --- kamil
   olek ---|
           --- kacper
 *)
@@ -10,6 +10,7 @@ open Structure.Ast
 let clauses = 
  "mother(ania, basia).
   mother(basia, piotr).
+  father(piotr, kamil).
   father(olek, ania).
   father(olek, kacper).
   parent(X, Y) :- mother(X, Y); father(X, Y).
