@@ -33,6 +33,7 @@ let parsed = [
   Fact((Comp(Atom("parent"), [Atom("olek"); Atom("kacper")])));
   Fact((Comp(Atom("parent"), [Atom("olek"); Atom("ania")])));
   Fact((Comp(Atom("parent"), [Atom("ania"); Atom("basia")])));
+  Fact((Comp(Atom("parent"), [Atom("basia"); Atom("ala")])));
   Fact((Comp(Atom("parent"), [Atom("basia"); Atom("piotr")])));
 
   Rule(

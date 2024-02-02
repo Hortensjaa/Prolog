@@ -8,20 +8,21 @@ open Structure.Ast
 *)
 
 let clauses = 
- "mother(ania, basia).
+ "father(olek, kacper).
+  father(olek, ania).
+  mother(ania, basia).
   mother(basia, piotr).
   father(piotr, kamil).
-  father(olek, ania).
-  father(olek, kacper).
   parent(X, Y) :- mother(X, Y); father(X, Y).
   ancestor(X, Y) :- parent(X, Y).
   ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y)."
 
 let parsed = [
+  Fact((Comp(Atom("father"), [Atom("olek"); Atom("kacper")])));
+  Fact((Comp(Atom("father"), [Atom("olek"); Atom("ania")])));
   Fact((Comp(Atom("mother"), [Atom("ania"); Atom("basia")])));
   Fact((Comp(Atom("mother"), [Atom("basia"); Atom("piotr")])));
-  Fact((Comp(Atom("father"), [Atom("olek"); Atom("ania")])));
-  Fact((Comp(Atom("father"), [Atom("olek"); Atom("kacper")])));
+  Fact((Comp(Atom("father"), [Atom("piotr"); Atom("kamil")])));
 
   Rule(
     (Comp(Atom("parent"), [VarS("X"); VarS("Y")])),

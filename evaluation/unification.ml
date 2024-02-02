@@ -36,6 +36,6 @@ let rec substitute term dict =
   | Atom(_) | Num(_) -> term
   | VarS(x) -> 
     (try 
-      let sub_term = Hashtbl.find dict x in sub_term
+      let sub_term = Hashtbl.find dict x in (substitute sub_term dict)
       with Not_found -> term)
-  | Comp(f, args) -> Comp(f, List.map (fun t -> substitute t dict) args)
+  | Comp(f, args) -> Comp(substitute f dict, List.map (fun t -> substitute t dict) args)
