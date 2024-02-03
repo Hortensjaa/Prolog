@@ -16,10 +16,10 @@ let rec parse_term_helper exp =
     let rec parse_args_list args_list_cur parsed_list cur_str =
       match args_list_cur with
       | hd::tl -> 
-        (* jeśli wyrażenie jest w całości, czyli normalnie się parsuje *)
+        (* if we can parse compound term *)
         (try 
           parse_args_list tl (parsed_list@[(parse_term_helper (cur_str ^ hd))]) ""
-        (* jeśli nie da się sparsować, to szukamy dalej poprawnego wyrażenia złożonego *)
+        (* else, will look for next compound term *)
         with |_ -> 
           print_endline ("cant parse: " ^ hd);
           parse_args_list tl parsed_list (cur_str ^ hd ^ ", ")) 

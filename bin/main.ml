@@ -12,9 +12,5 @@ let rec main_loop clauses =
 
 
 let () = 
-  let clauses = parse "examples/ancestors.txt" in main_loop clauses
-  (* let res = eval "ancestor(X, kamil)" Examples.Ancestors.clauses in  *)
-  (* let res = eval "ancestor(olek, P)" Examples.Ancestors.clauses in  *)
-  (* let res = eval "sibling(X, Y)" Examples.Family_tree1.clauses in  *)
-  (* let res = eval "mother(X, Y)" Examples.Family_tree1.clauses in  *)
-  (* print_endline (string_of_bool res) *)
+  let filename = Sys.argv.(1) in
+  let clauses = parse filename in main_loop clauses

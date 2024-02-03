@@ -14,7 +14,7 @@ let rec term_struct_to_string t =
   | Comp(hd, bd) -> ("Comp(" ^ term_struct_to_string(hd) ^ ", [" ^ (body_to_str bd) ^ "])")
 
 (* print whole rules *)
-let rec clause_struct_to_string c =
+let clause_struct_to_string c =
 
   let body_to_str bd =
     String.concat ", " (List.map term_struct_to_string bd)

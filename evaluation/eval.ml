@@ -17,15 +17,6 @@ let eval ?(read_line=read_line) query clauses =
   let all_vars = Hashtbl.create (count_vars 0 query) in
   let start_vars = get_vars query in
 
-  (* let print_goals_and_backtrack_and_env gs b =
-    print_string "goals: ["; 
-    List.iter (fun (id, g) -> (print_string ("("^(string_of_int id)^": "^(term_struct_to_string g)^" ; "))) gs; 
-    print_string "]\n";
-    print_string "backtracking: ["; 
-    List.iter (fun b -> (print_string ("("^(string_of_int b.from)^" -> "^(string_of_int b.index)^": "^(term_struct_to_string b.term)^" ; "))) b; 
-    print_string "]\n"; 
-    print_string "env: {"; Hashtbl.iter (fun k v -> print_string (k ^ ": " ^ term_struct_to_string v ^ ", ")) all_vars; print_endline "}\n";in *)
-
   (* main evaluating function *)
   let rec eval_loop (clauses_iter: clause list) (goals: (int * term) list) (backtracking: step list)  =
     match goals with
@@ -50,9 +41,6 @@ let eval ?(read_line=read_line) query clauses =
             env = Hashtbl.to_seq_keys vars
           }::backtracking in 
 
-          (* print_endline ("fact nr "^(string_of_int new_match_id)^": "^(term_struct_to_string new_f));
-          print_goals_and_backtrack_and_env rst_goals new_backtracking; *)
-
           eval_loop clauses rst_goals new_backtracking
         with CantUnify -> eval_loop clauses_rst goals backtracking)
 
@@ -76,9 +64,6 @@ let eval ?(read_line=read_line) query clauses =
             env = Hashtbl.to_seq_keys vars
           }::backtracking in 
 
-          (* print_endline ("rule nr "^(string_of_int new_match_id)^": "^(term_struct_to_string new_hd));
-          print_goals_and_backtrack_and_env new_goals new_backtracking; *)
-
           eval_loop clauses new_goals  new_backtracking
         with CantUnify -> eval_loop clauses_rst goals backtracking)
 
@@ -86,13 +71,11 @@ let eval ?(read_line=read_line) query clauses =
     
   (* backtracking as seperate function *)
   and go_back b g = 
-    (* print_endline "back!"; *)
     begin match b with
     | cur_step::b_rst ->
       let new_goals = (cur_step.from, cur_step.term )::(List.filter (fun (n, _) -> not (n=cur_step.index)) g) in
       Seq.iter (fun k -> Hashtbl.remove all_vars k) cur_step.env;
 
-      (* print_goals_and_backtrack_and_env new_goals b_rst; *)
       (try eval_loop (List_helpers.from_nth clauses (cur_step.index+1)) new_goals b_rst
       with List_helpers.OutOfBounds -> (false, b))
       
