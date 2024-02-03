@@ -3,7 +3,7 @@ open! Stdio
 
 open Evaluation.Eval
 
-let clauses = Examples.Ancestors.clauses
+let clauses = Examples.Ancestors.parsed
 
 let%test_unit "test ancestor1" =
   [%test_eq: bool] (eval "ancestor(olek, ania)" clauses  ~read_line:(fun () -> ".")) true

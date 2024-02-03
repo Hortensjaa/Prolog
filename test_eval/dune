@@ -1,5 +1,5 @@
 (library
  (name test_eval)
  (libraries base stdio evaluation examples)
- (inline_tests (flags (-stop-on-error)))
+ (inline_tests (deps (glob_files ../examples/*)))
  (preprocess (pps ppx_inline_test ppx_assert ppx_expect)))

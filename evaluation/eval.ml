@@ -13,8 +13,7 @@ type step = {
 
 let eval ?(read_line=read_line) query clauses = 
 
-  let query = Term_parser.parse_term query in 
-  let clauses = Parser.parse clauses in
+  let query = Term_parser.parse_term query in
   let all_vars = Hashtbl.create (count_vars 0 query) in
   let start_vars = get_vars query in
 

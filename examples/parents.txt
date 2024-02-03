@@ -1,0 +1,3 @@
+parent(olek, kacper).
+parent(olek, ania).
+parent(hania, kasia).

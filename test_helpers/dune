@@ -7,4 +7,5 @@
      test_parser
      test_unification
   )
+  (deps (glob_files ../examples/*))
   (libraries alcotest examples parsing evaluation))

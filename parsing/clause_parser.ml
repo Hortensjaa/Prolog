@@ -17,7 +17,7 @@ let parse_clause exp =
     let args_list = split (regexp {|\(; \)\|\.|}) body in
     let parsed_head = parse_term head in
 
-    List.map (fun arg -> Rule(parsed_head, [parse_term_helper arg])) args_list
+    List.rev_map (fun arg -> Rule(parsed_head, [parse_term_helper arg])) args_list
 
   else if (is_conj exp) then
     let rec conj_parse_helper splitted_exp res =

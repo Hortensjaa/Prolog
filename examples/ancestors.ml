@@ -7,16 +7,6 @@ open Structure.Ast
           --- kacper
 *)
 
-let clauses = 
- "father(olek, kacper).
-  father(olek, ania).
-  mother(ania, basia).
-  mother(basia, piotr).
-  father(piotr, kamil).
-  parent(X, Y) :- mother(X, Y); father(X, Y).
-  ancestor(X, Y) :- parent(X, Y).
-  ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y)."
-
 let parsed = [
   Fact((Comp(Atom("father"), [Atom("olek"); Atom("kacper")])));
   Fact((Comp(Atom("father"), [Atom("olek"); Atom("ania")])));

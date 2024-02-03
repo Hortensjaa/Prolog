@@ -4,27 +4,29 @@ open Parsing.Parser
 open Examples
 
 let test_parse_1 () =
-  let result = parse Parents.clauses in
+  let result = parse "../examples/parents.txt" in
   let expected = Parents.parsed in
   (check bool) "parse_1" true (result=expected)
 
 let test_parse_2 () =
-  let result = parse Family_tree1.clauses in
+  let result = parse "../examples/family_tree1.txt" in
   let expected = Family_tree1.parsed in
   (check bool) "parse_2" true (result=expected)
 
 let test_parse_4 () =
-  let result = parse Family_tree3.clauses in
-  let expected = Family_tree3.parsed in
+  let result = parse "../examples/family_tree2.txt" in
+
+  (List.iter (fun c -> print_endline (Structure.Print.clause_struct_to_string c)) result);
+  let expected = Family_tree2.parsed in
   (check bool) "parse_4" true (result=expected)
 
 let test_parse_5 () =
-  let result = parse Ancestors.clauses in
+  let result = parse "../examples/ancestors.txt" in
   let expected = Ancestors.parsed in
   (check bool) "parse_5" true (result=expected)
 
 let test_parse_6 () =
-  let result = parse Complicated.clauses in
+  let result = parse "../examples/complicated.txt" in
   let expected = Complicated.parsed in
   (check bool) "parse_6" true (result=expected)
 

@@ -29,9 +29,7 @@ let test_parse_rule1 () =
 
 let test_parse_disj2 () =
   let result = parse_clause (neg_str ^ " :- " ^ pos_str  ^ "; " ^ zero_str ^ ".") in
-  let expected = [
-    Rule(neg_term, [pos_term]); 
-    Rule(neg_term, [zero_term])] in
+  let expected = [Rule(neg_term, [zero_term]); Rule(neg_term, [pos_term]); ] in
   (check bool) "parse_disj2" true (result=expected)
 
 let test_parse_conj4 () =
